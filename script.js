@@ -1,4 +1,4 @@
-// Run script only after the page is fully loaded
+// Run script only after the page has fully loaded
 document.addEventListener('DOMContentLoaded', function () {
 
     // Select DOM elements
@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to add a new task
     function addTask() {
-        // Get and trim input text
-        const taskText = taskInput.value.trim();
+        // Get and trim the task text
+        let taskText = taskInput.value.trim();
 
         // Check if input is empty
         if (taskText === "") {
@@ -17,21 +17,21 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Create a new list item (li)
+        // Create a new li element
         const li = document.createElement('li');
         li.textContent = taskText;
 
-        // Create a remove button
+        // Create remove button
         const removeBtn = document.createElement('button');
         removeBtn.textContent = "Remove";
-        removeBtn.className = 'remove-btn';
+        removeBtn.className = "remove-btn";
 
-        // Set onclick event to remove the task
+        // Set remove button functionality
         removeBtn.onclick = function () {
             taskList.removeChild(li);
         };
 
-        // Append the remove button to li then add li to the list
+        // Append the button to li, then li to taskList
         li.appendChild(removeBtn);
         taskList.appendChild(li);
 
@@ -39,16 +39,16 @@ document.addEventListener('DOMContentLoaded', function () {
         taskInput.value = "";
     }
 
-    // Add event listener to button for adding tasks
+    // Event listener for add button
     addButton.addEventListener('click', addTask);
 
-    // Allow adding tasks by pressing Enter
+    // Allow Enter key to add task
     taskInput.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
             addTask();
         }
     });
 
-    // Invoke addTask on DOM load (as required)
+    // Invoke addTask on DOMContentLoaded as required
     addTask();
 });
