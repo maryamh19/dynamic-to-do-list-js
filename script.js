@@ -4,38 +4,43 @@ document.addEventListener('DOMContentLoaded', function () {
     const taskInput = document.getElementById('task-input');
     const taskList = document.getElementById('task-list');
 
+    // Function to add a new task to the list
     function addTask() {
         const taskText = taskInput.value.trim();
 
-        if (taskText === "") {
-            alert("Please enter a task.");
-            return;
+        // If taskText is not empty
+        if (taskText !== "") {
+
+            // Create a new li element and set its textContent to taskText
+            const li = document.createElement('li');
+            li.textContent = taskText;
+
+            // Create a remove button, set its textContent and className
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = "Remove";
+            removeBtn.className = 'remove-btn';
+
+            // Assign onclick event that removes li from taskList
+            removeBtn.onclick = function () {
+                taskList.removeChild(li);
+            };
+
+            // Append remove button to li
+            li.appendChild(removeBtn);
+
+            // Append li to taskList
+            taskList.appendChild(li);
+
+            // Clear input field
+            taskInput.value = "";
         }
-
-        const li = document.createElement('li');
-
-        // Create a text node instead of using textContent
-        const taskTextNode = document.createTextNode(taskText + " ");
-        li.appendChild(taskTextNode);
-
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = "Remove";
-        removeBtn.className = 'remove-btn';
-
-        removeBtn.addEventListener('click', function () {
-            li.remove();
-        });
-
-        li.appendChild(removeBtn);
-        taskList.appendChild(li);
-
-        taskInput.value = "";
     }
 
+    // Event listener: addButton calls addTask on click
     addButton.addEventListener('click', addTask);
 
-    // Use 'keydown' for better compatibility than 'keypress'
-    taskInput.addEventListener('keydown', function (event) {
+    // Event listener: pressing Enter in taskInput calls addTask
+    taskInput.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
             addTask();
         }
